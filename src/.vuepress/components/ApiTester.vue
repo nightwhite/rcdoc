@@ -48,6 +48,22 @@
           </select>
         </div>
 
+        <!-- 请求地址 -->
+        <div class="url-display">
+          <label>请求地址：</label>
+          <div class="url-input-wrapper">
+            <input
+              type="text"
+              :value="getRequestUrl(api)"
+              class="url-input"
+              readonly
+            />
+            <button class="copy-url-btn" @click="copyUrl(api)" title="复制地址">
+              <iconify-icon icon="mdi:content-copy" width="16" height="16"></iconify-icon>
+            </button>
+          </div>
+        </div>
+
         <!-- 模型选择 -->
         <div class="model-selector">
           <label>模型：</label>
@@ -56,6 +72,36 @@
               {{ model }}
             </option>
           </select>
+        </div>
+
+        <!-- 流式选择 -->
+        <div class="stream-selector">
+          <label>请求模式：</label>
+          <div class="stream-options">
+            <label class="stream-option">
+              <input
+                type="radio"
+                :name="`stream-${api.id}`"
+                :value="true"
+                v-model="api.stream"
+                :disabled="isStreamOnly(api)"
+              />
+              <span class="radio-label">流式请求</span>
+            </label>
+            <label class="stream-option">
+              <input
+                type="radio"
+                :name="`stream-${api.id}`"
+                :value="false"
+                v-model="api.stream"
+                :disabled="isStreamOnly(api)"
+              />
+              <span class="radio-label">非流式请求</span>
+            </label>
+            <span v-if="isStreamOnly(api)" class="stream-hint">
+              (responses 接口仅支持流式)
+            </span>
+          </div>
         </div>
 
         <!-- 消息输入 -->
@@ -105,11 +151,16 @@
         <span>
           <iconify-icon v-if="error" icon="mdi:close-circle" width="18" height="18" class="error-icon"></iconify-icon>
           <iconify-icon v-else icon="mdi:check-circle" width="18" height="18" class="success-icon"></iconify-icon>
-          {{ error ? '错误' : '响应结果' }}
+          {{ error ? '错误' : (isStreamResponse ? '流式响应' : 'JSON 响应') }}
         </span>
-        <button class="clear-btn" @click="clearResponse">清除</button>
+        <div class="response-actions">
+          <span v-if="!error" class="response-type-badge" :class="{ stream: isStreamResponse }">
+            {{ isStreamResponse ? 'STREAM' : 'JSON' }}
+          </span>
+          <button class="clear-btn" @click="clearResponse">清除</button>
+        </div>
       </div>
-      <pre :class="['response-content', { error: error }]">{{ error || response }}</pre>
+      <pre :class="['response-content', { error: error, 'json-response': !isStreamResponse && !error }]">{{ error || response }}</pre>
     </div>
   </div>
 </template>
@@ -124,6 +175,7 @@ const loading = ref(false)
 const response = ref('')
 const error = ref('')
 const isDark = ref(false)
+const isStreamResponse = ref(false)
 
 // 检测主题模式
 function detectTheme() {
@@ -186,6 +238,7 @@ const apis = reactive([
     selectedModel: 'gpt-5.2',
     message: '你好',
     showCurl: false,
+    stream: true,
     endpoints: [
       { name: 'responses', label: 'responses 接口', path: '/codex/v1/responses' },
       { name: 'completions', label: 'completions 接口', path: '/codex/v1/chat/completions' }
@@ -218,6 +271,7 @@ const apis = reactive([
     selectedModel: 'claude-sonnet-4-5-20250929',
     message: '你好',
     showCurl: false,
+    stream: true,
     endpoints: [
       { name: 'messages', label: 'messages 接口', path: '/claude/v1/messages' }
     ],
@@ -237,6 +291,7 @@ const apis = reactive([
     selectedModel: 'gemini-3-pro-preview',
     message: '你好',
     showCurl: false,
+    stream: true,
     endpoints: [
       { name: 'generate', label: 'streamGenerateContent', path: '/gemini/v1beta/models' }
     ],
@@ -252,8 +307,15 @@ const apis = reactive([
   }
 ])
 
+// 判断是否只支持流式
+function isStreamOnly(api) {
+  return api.id === 'codex' && api.selectedEndpoint === 'responses'
+}
+
 function generateCurl(api) {
   const key = apiKey.value || '{此处填写ApiKey}'
+  // responses 接口强制流式
+  const useStream = isStreamOnly(api) ? true : api.stream
 
   if (api.id === 'codex') {
     const endpoint = api.endpoints.find(e => e.name === api.selectedEndpoint)
@@ -289,7 +351,7 @@ function generateCurl(api) {
         "content": "${api.message}"
       }
     ],
-    "stream": true
+    "stream": ${useStream}
   }'`
     }
   } else if (api.id === 'claude') {
@@ -311,10 +373,11 @@ function generateCurl(api) {
       }
     ],
     "max_tokens": 32000,
-    "stream": true
+    "stream": ${useStream}
   }'`
   } else if (api.id === 'gemini') {
-    return `curl --location 'https://right.codes/gemini/v1beta/models/${api.selectedModel}:streamGenerateContent?alt=sse' \\
+    const method = useStream ? 'streamGenerateContent?alt=sse' : 'generateContent'
+    return `curl --location 'https://right.codes/gemini/v1beta/models/${api.selectedModel}:${method}' \\
 --header 'connection: keep-alive' \\
 --header 'x-goog-api-key: ${key}' \\
 --header 'content-type: application/json' \\
@@ -345,6 +408,10 @@ async function testApi(api) {
   loading.value = true
   response.value = ''
   error.value = ''
+  isStreamResponse.value = false
+
+  // responses 接口强制流式
+  const useStream = isStreamOnly(api) ? true : api.stream
 
   try {
     let url, headers, body
@@ -370,7 +437,7 @@ async function testApi(api) {
         body = {
           model: api.selectedModel,
           messages: [{ role: 'user', content: api.message }],
-          stream: true
+          stream: useStream
         }
       }
     } else if (api.id === 'claude') {
@@ -386,10 +453,11 @@ async function testApi(api) {
           content: [{ type: 'text', text: api.message }]
         }],
         max_tokens: 1024,
-        stream: true
+        stream: useStream
       }
     } else if (api.id === 'gemini') {
-      url = `https://right.codes/gemini/v1beta/models/${api.selectedModel}:streamGenerateContent?alt=sse`
+      const method = useStream ? 'streamGenerateContent?alt=sse' : 'generateContent'
+      url = `https://right.codes/gemini/v1beta/models/${api.selectedModel}:${method}`
       headers = {
         'Content-Type': 'application/json',
         'x-goog-api-key': apiKey.value
@@ -415,16 +483,24 @@ async function testApi(api) {
       return
     }
 
-    // 处理流式响应
-    const reader = res.body.getReader()
-    const decoder = new TextDecoder()
+    if (useStream) {
+      // 流式响应：实时输出
+      isStreamResponse.value = true
+      const reader = res.body.getReader()
+      const decoder = new TextDecoder()
 
-    while (true) {
-      const { done, value } = await reader.read()
-      if (done) break
+      while (true) {
+        const { done, value } = await reader.read()
+        if (done) break
 
-      const chunk = decoder.decode(value, { stream: true })
-      response.value += chunk
+        const chunk = decoder.decode(value, { stream: true })
+        response.value += chunk
+      }
+    } else {
+      // 非流式响应：格式化 JSON 输出
+      isStreamResponse.value = false
+      const data = await res.json()
+      response.value = JSON.stringify(data, null, 2)
     }
   } catch (err) {
     error.value = `请求失败: ${err.message}`
@@ -443,9 +519,35 @@ async function copyCurl(api) {
   }
 }
 
+async function copyUrl(api) {
+  const url = getRequestUrl(api)
+  try {
+    await navigator.clipboard.writeText(url)
+    alert('请求地址已复制到剪贴板')
+  } catch {
+    alert('复制失败，请手动复制')
+  }
+}
+
 function clearResponse() {
   response.value = ''
   error.value = ''
+  isStreamResponse.value = false
+}
+
+// 获取请求地址
+function getRequestUrl(api) {
+  if (api.id === 'codex') {
+    const endpoint = api.endpoints.find(e => e.name === api.selectedEndpoint)
+    return `https://www.right.codes${endpoint.path}`
+  } else if (api.id === 'claude') {
+    return 'https://www.right.codes/claude/v1/messages'
+  } else if (api.id === 'gemini') {
+    const useStream = isStreamOnly(api) ? true : api.stream
+    const method = useStream ? 'streamGenerateContent?alt=sse' : 'generateContent'
+    return `https://right.codes/gemini/v1beta/models/${api.selectedModel}:${method}`
+  }
+  return ''
 }
 </script>
 
@@ -639,6 +741,107 @@ function clearResponse() {
   box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.2);
 }
 
+/* 请求地址样式 */
+.url-display {
+  margin-bottom: 20px;
+}
+
+.url-display label {
+  display: block;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.url-input-wrapper {
+  display: flex;
+  gap: 8px;
+}
+
+.url-input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  font-size: 13px;
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+  cursor: default;
+}
+
+.copy-url-btn {
+  padding: 12px 14px;
+  border: 1px solid var(--border-color);
+  background: var(--input-bg);
+  border-radius: 10px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.copy-url-btn:hover {
+  background: var(--accent-color);
+  color: white;
+  border-color: var(--accent-color);
+}
+
+/* 流式选择样式 */
+.stream-selector {
+  margin-bottom: 20px;
+}
+
+.stream-selector label {
+  display: block;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.stream-options {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.stream-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  color: var(--text-primary);
+  font-size: 14px;
+}
+
+.stream-option input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent-color);
+  cursor: pointer;
+}
+
+.stream-option input[type="radio"]:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.stream-option input[type="radio"]:disabled + .radio-label {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.stream-hint {
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-style: italic;
+}
+
 .message-input {
   width: 100%;
   padding: 14px 16px;
@@ -799,6 +1002,26 @@ function clearResponse() {
   gap: 8px;
 }
 
+.response-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.response-type-badge {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  background: #30d158;
+  color: white;
+  letter-spacing: 0.5px;
+}
+
+.response-type-badge.stream {
+  background: #0a84ff;
+}
+
 .clear-btn {
   padding: 8px 16px;
   border: 1px solid var(--border-color);
@@ -826,6 +1049,12 @@ function clearResponse() {
   max-height: 400px;
   overflow-y: auto;
   font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.response-content.json-response {
+  color: #dcdcaa;
 }
 
 .response-content.error {
