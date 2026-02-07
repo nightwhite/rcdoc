@@ -342,7 +342,7 @@ html[data-theme="dark"] .home-page {
   border-radius: 99px;
   font-size: 1.125rem;
   font-weight: 600;
-  text-decoration: none;
+  text-decoration: none !important;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
   border: none;

@@ -65,6 +65,11 @@ export default sidebar({
                     text: "Curl调用示例",
                     icon: "si:pull-request-fill",
                     link: "curl.md",
+                },
+                {
+                    text: "OpenCode",
+                    icon: "mynaui:code-waves",
+                    link: "opencode.md",
                 }
             ],
         },
