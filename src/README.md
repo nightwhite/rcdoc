@@ -24,7 +24,7 @@ footer: Copyright © 2026-present Right Code
     </div>
     <div class="hero-content">
       <div class="logo-container">
-        <img src="/1024.png" alt="Right Code" class="hero-logo" />
+        <img src="/1024.webp" alt="Right Code" class="hero-logo" />
       </div>
       <h1 class="hero-title">
         <span class="gradient-text">Right Code</span>
@@ -71,51 +71,45 @@ footer: Copyright © 2026-present Right Code
     <div class="features-grid">
       <div class="feature-card glass-card">
         <div class="feature-icon-wrapper">
-          <div class="feature-icon">🤖</div>
+          <iconify-icon icon="logos:claude-icon" width="32" height="32"></iconify-icon>
         </div>
         <h3 class="feature-title">Claude Code</h3>
         <p class="feature-description">支持 Anthropic Claude 全系列模型，包括 Claude 3.5 Sonnet、Claude Opus 4.5 等，具备卓越的推理能力。</p>
-        <a href="/guide/claude-code.html" class="feature-link">了解更多 <span class="arrow">→</span></a>
       </div>
       <div class="feature-card glass-card">
         <div class="feature-icon-wrapper">
-          <div class="feature-icon">💻</div>
+          <iconify-icon icon="hugeicons:chat-gpt" width="32" height="32"></iconify-icon>
         </div>
         <h3 class="feature-title">OpenAI Codex</h3>
         <p class="feature-description">接入 OpenAI Codex CLI，专为代码生成与理解优化，提升编程效率。</p>
-        <a href="/guide/codex.html" class="feature-link">了解更多 <span class="arrow">→</span></a>
       </div>
       <div class="feature-card glass-card">
         <div class="feature-icon-wrapper">
-          <div class="feature-icon">💎</div>
+          <iconify-icon icon="vscode-icons:file-type-gemini" width="32" height="32"></iconify-icon>
         </div>
         <h3 class="feature-title">Gemini CLI</h3>
         <p class="feature-description">Google Gemini 系列模型支持，强大的多模态处理能力，更快的响应速度。</p>
-        <a href="/guide/gemini.html" class="feature-link">了解更多 <span class="arrow">→</span></a>
       </div>
       <div class="feature-card glass-card">
         <div class="feature-icon-wrapper">
-          <div class="feature-icon">⚡</div>
+          <iconify-icon icon="ri:grok-ai-fill" width="32" height="32"></iconify-icon>
         </div>
         <h3 class="feature-title">Grok Code</h3>
         <p class="feature-description">xAI Grok 模型接入，实时联网能力，获取最新信息，保持代码前沿。</p>
-        <a href="/guide/grok.html" class="feature-link">了解更多 <span class="arrow">→</span></a>
       </div>
       <div class="feature-card glass-card">
         <div class="feature-icon-wrapper">
-          <div class="feature-icon">🔌</div>
+          <iconify-icon icon="mynaui:api-solid" width="32" height="32"></iconify-icon>
         </div>
         <h3 class="feature-title">统一 API</h3>
         <p class="feature-description">一个 API Key 访问所有 AI Agent，标准化接口，大幅简化集成和开发流程。</p>
-        <a href="/guide/api.html" class="feature-link">了解更多 <span class="arrow">→</span></a>
       </div>
       <div class="feature-card glass-card">
         <div class="feature-icon-wrapper">
-          <div class="feature-icon">⚖️</div>
+          <iconify-icon icon="stash:balance-solid" width="32" height="32"></iconify-icon>
         </div>
         <h3 class="feature-title">智能负载均衡</h3>
         <p class="feature-description">自动故障转移与智能路由，确保高并发下的服务稳定性与低延迟。</p>
-        <a href="/guide/load-balance.html" class="feature-link">了解更多 <span class="arrow">→</span></a>
       </div>
     </div>
   </section>
@@ -556,24 +550,6 @@ html[data-theme="dark"] .home-page {
   line-height: 1.6;
   margin: 0 0 2rem;
   min-height: 3.2em;
-}
-
-.feature-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: var(--primary-color);
-  font-weight: 600;
-  text-decoration: none;
-  transition: gap 0.2s ease;
-}
-
-.feature-link:hover {
-  gap: 0.75rem;
-}
-
-.arrow {
-  transition: transform 0.2s ease;
 }
 
 /* Integration */

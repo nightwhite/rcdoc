@@ -26,7 +26,7 @@ open "$HOME/.codex"
 ```
 :::
 
-![](/assets/image/rc_cli_config/rc-3.png)
+![](/assets/image/rc_cli_config/rc-3.webp)
 
 2. 手动创建 `config.toml` 与 `auth.json` 文件，写入如下内容
 
@@ -64,4 +64,4 @@ requires_openai_auth = true
 
 4. 在终端运行 `codex`，对话查看是否配置成功
 
-![](/assets/image/rc_cli_config/rc-4.png)
+![](/assets/image/rc_cli_config/rc-4.webp)

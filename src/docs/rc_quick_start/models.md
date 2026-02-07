@@ -13,7 +13,7 @@ footer: false
 
 3. 点击箭头所指处，可复制该渠道的 `BaseUrl` 地址
 
-![](/assets/image/rc_quick_start/rc-3.png)
+![](/assets/image/rc_quick_start/rc-3.webp)
 
 ## 模型列表
 

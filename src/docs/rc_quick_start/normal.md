@@ -17,7 +17,7 @@ node -v
 
 > Nodejs下载链接：[Nodejs最新版下载](https://nodejs.org/en/download)
 
-![](/assets/image/rc_quick_start/rc-4.png)
+![](/assets/image/rc_quick_start/rc-4.webp)
 
 ### CLI安装
 
@@ -32,15 +32,15 @@ npm i -g @google/gemini-cli@latest
 
 ```
 
-![](/assets/image/rc_quick_start/rc-5.png)
+![](/assets/image/rc_quick_start/rc-5.webp)
 
 ### 测试运行
 
 > **打开三个终端，分别运行Claude Code、Codex、Gemini的CLI，如果有界面，说明没有问题了，不需要管其他的报错！**
 
-![](/assets/image/rc_quick_start/rc-6.png)
+![](/assets/image/rc_quick_start/rc-6.webp)
 
-![](/assets/image/rc_quick_start/rc-7.png)
+![](/assets/image/rc_quick_start/rc-7.webp)
 
 ### 常见问题
 
@@ -52,4 +52,4 @@ npm i -g @google/gemini-cli@latest
 
 > **Git Bash下载地址**：[Git Download](https://git-scm.com/install/windows)
 
-![QQ20260125-132755](/assets/image/rc_quick_start/rc-8.png)
+![QQ20260125-132755](/assets/image/rc_quick_start/rc-8.webp)

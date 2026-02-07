@@ -43,7 +43,9 @@ curl https://www.right.codes/codex/v1/responses \
   }'
 ```
 
-> 鉴权请求头兼容`Authorization`和`x-api-key`，可任选其一
+::: info
+鉴权请求头兼容`Authorization`和`x-api-key`，可任选其一
+:::
 
 #### completions接口
 
@@ -63,7 +65,9 @@ curl https://www.right.codes/codex/v1/chat/completions \
   }'
 ```
 
-> /v1/chat/completions的响应由/v1/responses的响应转化而来，部分软件/插件可能存在兼容性问题；请求体中的system prompt会被自动替换为codex的默认instructions而无效
+::: info
+/v1/chat/completions的响应由/v1/responses的响应转化而来，部分软件/插件可能存在兼容性问题；请求体中的system prompt会被自动替换为codex的默认instructions而无效
+:::
 
 ### Claude
 
@@ -89,7 +93,9 @@ curl https://www.right.codes/claude/v1/messages \
     "stream": true
   }'
 ```
-> 鉴权请求头兼容`Authorization`和`x-api-key`，可任选其一
+::: info
+鉴权请求头兼容`Authorization`和`x-api-key`，可任选其一
+:::
 
 ### Gemini
 

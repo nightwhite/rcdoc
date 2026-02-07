@@ -25,7 +25,7 @@ open "$HOME/.gemini"
 ```
 :::
 
-![](/assets/image/rc_cli_config/rc-5.png)
+![](/assets/image/rc_cli_config/rc-5.webp)
 
 2. 手动创建 `.env` 文件，写入如下内容
 ```text
@@ -38,4 +38,4 @@ GEMINI_MODEL=gemini-3-pro-preview
 
 4. 在终端运行 `gemini`，对话查看是否配置成功
 
-![](/assets/image/rc_cli_config/rc-6.png)
+![](/assets/image/rc_cli_config/rc-6.webp)

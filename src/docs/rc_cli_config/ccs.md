@@ -9,7 +9,7 @@ footer: false
 
 **使用 CC-Switch，您可以：**
 
-![](/assets/image/rc_quick_start/rc-0.png)
+![](/assets/image/rc_quick_start/rc-0.webp)
 
 - ✅ 一键切换 API 配置 - 在多个 API 提供商之间快速切换
 - ✅ 可视化配置管理 - 通过图形界面轻松管理所有配置
@@ -25,7 +25,7 @@ footer: false
 
 > 访问 [CC Switch Download](https://github.com/farion1231/cc-switch/releases/latest) 页面下载最新的CC-Switch工具，在本地进行安装
 
-![](/assets/image/rc_quick_start/rc-9.png)
+![](/assets/image/rc_quick_start/rc-9.webp)
 
 ### 配置渠道商
 
@@ -35,7 +35,7 @@ footer: false
   - 打开软件，选择要配置的CLI
   - 选择好CLI后，点击添加供应商进行配置
 
-![](/assets/image/rc_quick_start/rc-10.png)
+![](/assets/image/rc_quick_start/rc-10.webp)
 
 - **步骤二：**
   - 在上方 `预设供应商` 中选择 `Right Code` 
@@ -51,23 +51,23 @@ footer: false
 如果你想使用不同的渠道，需要更改 `请求地址` 一栏内容
 :::
 
-![](/assets/image/rc_quick_start/rc-11.png)
+![](/assets/image/rc_quick_start/rc-11.webp)
 
 - **步骤三：**
   - 在主界面查看，确保目前使用的渠道是我们刚配置的
 
-![](/assets/image/rc_quick_start/rc-12.png)
+![](/assets/image/rc_quick_start/rc-12.webp)
 
 - **步骤四：**
     - 在主界面点击设置按钮，进入通用设置页面
 
     - 在下方找到 `跳过Claude Code初次安装确认`，确保这项是打开的
 
-![](/assets/image/rc_quick_start/rc-13.png)
+![](/assets/image/rc_quick_start/rc-13.webp)
 
-![](/assets/image/rc_quick_start/rc-14.png)
+![](/assets/image/rc_quick_start/rc-14.webp)
 
 - **步骤四：**
   - 打开终端，运行codex或者claude，进行简单对话，查看配置是否正常
 
-![](/assets/image/rc_quick_start/rc-999.png)
+![](/assets/image/rc_quick_start/rc-999.webp)

@@ -10,7 +10,7 @@ footer: false
 <div class="intro-section">
   <div class="intro-card">
     <div class="intro-icon">
-      <img src="/logo.png" alt="Right Code" width="100" height="100" />
+      <img src="/logo.webp" alt="Right Code" width="100" height="100" />
     </div>
     <div class="intro-content">
       <p><strong>Right Code</strong> 是一家兼具<span class="intro-highlight">极致稳定性</span>以及<span class="intro-highlight">极致性价比</span>的 Codex、Claude Code 大模型 API 分发平台。</p>
@@ -231,9 +231,9 @@ footer: false
     </div>
     <div class="contact-info">
       <span class="contact-label">QQ群</span>
-      <span class="contact-value">741292866</span>
+      <span class="contact-value">1083110871</span>
     </div>
-    <button class="copy-btn" @click="copyText('741292866', $event)">
+    <button class="copy-btn" @click="copyText('1083110871', $event)">
       <iconify-icon icon="solar:copy-linear" width="18" height="18"></iconify-icon>
     </button>
   </div>

@@ -25,7 +25,7 @@ open "$HOME/.claude"
 ```
 :::
 
-![](/assets/image/rc_cli_config/rc-1.png)
+![](/assets/image/rc_cli_config/rc-1.webp)
 
 2. 手动创建 `settings.json` 文件，写入如下内容
 
@@ -55,4 +55,4 @@ open "$HOME/.claude"
 
 4. 在终端运行 `claude`，对话查看是否配置成功
 
-![](/assets/image/rc_cli_config/rc-2.png)
+![](/assets/image/rc_cli_config/rc-2.webp)

@@ -17,7 +17,7 @@ footer: false
 **套餐包只能使用Codex，请不要买错！**
 :::
 
-![](/assets/image/rc_quick_start/rc-1.png)
+![](/assets/image/rc_quick_start/rc-1.webp)
 
 ## 如何生成ApiKey？
 
@@ -30,5 +30,5 @@ footer: false
     - 最好不要开启 `可用模型限制`，保持默认即可
     - 如果你只想使用Codex套餐，不想让你的额度有额外流失，请关闭 `允许使用余额`
 
-![](/assets/image/rc_quick_start/rc-2.png)
+![](/assets/image/rc_quick_start/rc-2.webp)
 
